@@ -47,11 +47,27 @@ def remove_task(tasks):
     except (ValueError, IndexError):
         print("Invalid task number. No task removed.")
 
+
+def edit_task(tasks):
+    view_tasks(tasks)
+    try:
+        task_num = int(input("Enter the task number to edit: "))
+        old = tasks[task_num - 1]
+        new_text = input(f"Enter new text for task '{old}': ").strip()
+        if new_text:
+            tasks[task_num - 1] = new_text
+            print(f"Task {task_num} updated to '{new_text}'.")
+        else:
+            print("Empty input; task not changed.")
+    except (ValueError, IndexError):
+        print("Invalid task number; no changes made.")
+
+
 def main():
     tasks = load_tasks()
     while True:
         show_menu()
-        choice = input("Choose an option: ").strip()
+        choice = input("\nChoose an option: ").strip()
         if choice == '1':
             view_tasks(tasks)
         elif choice == '2':
@@ -59,8 +75,11 @@ def main():
         elif choice == '3':
             remove_task(tasks)
         elif choice == '4':
+            edit_task(tasks)
+        elif choice == '5':
             save_tasks(tasks)
-            print("Goodbye!")
+            
+            print("\nGoodbye!")
             break
         else:
             print("Invalid choice. Please try again.")
